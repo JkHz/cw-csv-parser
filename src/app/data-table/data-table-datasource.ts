@@ -1,5 +1,4 @@
 import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
@@ -19,6 +18,7 @@ export class DataTableDataSource extends DataSource<any> {
    */
   connect(): Observable<any[]> {
     if (this.sort) {
+      console.log('there is a sort!');
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
       return merge(observableOf(this.data), this.sort.sortChange)
@@ -42,6 +42,7 @@ export class DataTableDataSource extends DataSource<any> {
    * this would be replaced by requesting the appropriate data from the server.
    */
   private getSortedData(data: any[]): any[] {
+    console.log('hello from getSortedData');
     if (!this.sort || !this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -49,13 +50,19 @@ export class DataTableDataSource extends DataSource<any> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        // case 'name': return compare(a.name, b.name, isAsc);
-        // case 'id': return compare(+a.id, +b.id, isAsc);
-
-
+        case 'Camper Make ':
+          return compare(a['Camper Make '], b['Camper Make '], isAsc);
+        case 'Camper Brand':
+          return compare(a['Camper Brand'], b['Camper Brand'], isAsc);
+        case 'Sleep Number':
+          return compare(+a['Sleep Number'], +b['Sleep Number'], isAsc);
+        case 'Price':
+          return compare(+a['Price'], +b['Price'], isAsc);
 
         default: return 0;
       }
+
+
     });
   }
 }
