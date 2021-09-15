@@ -1,8 +1,5 @@
 <div class="app-container">
-  <input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="csvInputChange($event)" accept=".csv" class="search-container" />
+  <input id="csvInput" #csvInput hidden="true" type="file" onclick="this.value=null" (change)="csvInputChange($event)" accept=".csv" class="search-container" />
   <button mat-flat-button color="accent" (click)="csvInput.click()">Choose CSV File</button>
-  <!-- <div *ngIf="!isLoaded" class="loading-container">
-    <h1 class="loading-text">Awaiting CSV data</h1>
-  </div> -->
   <app-data-table [headers]="headers" [tableData]="tableData" *ngIf="tableData.length"></app-data-table>
 </div>

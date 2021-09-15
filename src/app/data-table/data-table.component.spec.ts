@@ -1,7 +1,7 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
 import { DataTableComponent } from './data-table.component';
@@ -31,4 +31,10 @@ describe('DataTableComponent', () => {
   it('should compile', () => {
     expect(component).toBeTruthy();
   });
+
+  it('initially sets up sorting', () => {
+    const sort = component.dataSource.sort;
+    expect(sort).toBeInstanceOf(MatSort);
+  });
 });
+
