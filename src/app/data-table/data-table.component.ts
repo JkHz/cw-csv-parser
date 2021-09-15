@@ -47,7 +47,7 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
       return data;
     }
     this.dataSource = data.sort((a: any, b: any) => {
-      const isAsc = sort?.direction === 'asc' || sort?.direction === '' ;
+      const isAsc = sort?.direction === 'asc' || sort?.direction === '';
       if (a[sort?.active]) {
         switch (typeof a[sort?.active]) {
           case 'string':
@@ -62,7 +62,7 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
     });
     this.dataSource = new MatTableDataSource(this.dataSource);
   }
-}
+};
 
 function compare(a: string | number, b: string | number, isAsc: boolean): number {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

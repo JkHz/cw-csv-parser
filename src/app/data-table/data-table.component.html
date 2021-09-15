@@ -5,7 +5,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <table mat-table [dataSource]="dataSource" class="full-width-table" matSort (matSortChange)="getSortedData($event)"
+  <table mat-table [dataSource]="dataSource" class="full-width-table" matSort matSortDisableClear="true" (matSortChange)="getSortedData($event)"
     aria-label="Elements">
     <ng-container *ngFor="let col of displayedColumns" matColumnDef="{{col}}">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col}}</th>
