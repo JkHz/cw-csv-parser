@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-data-table',
@@ -19,47 +19,64 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   // displayedColumns = this.headers;
   displayedColumns = [];
+  dataSource: any = [];
 
   constructor() { }
 
   ngAfterViewInit(): void {
     // this.dataSource.sort = this.sort;
-    // this.table.dataSource = this.dataSource;
+    // this.dataSource = this.tableData;
   }
 
   ngOnChanges(changes: any): void {
     if (changes.headers || changes.tableData) {
-      console.log(`Headers from data table: ${this.headers}`)
-      console.dir(`TableData from data table: ${this.tableData}`)
       this.displayedColumns = this.headers;
+      this.dataSource = new MatTableDataSource(this.tableData);
     }
   }
 
+  applyFilter(filterValue: string) {
+    console.log('filterValue', filterValue);
+    console.log('filteredData', this.dataSource.filteredData);
+    this.dataSource = new MatTableDataSource(this.dataSource.filteredData);
+    console.log('dataSource', this.dataSource.data);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   getSortedData(sort: Sort) {
+    console.log('direction', sort.direction);
     const data = this.tableData.slice();
-    console.log('hello from getSortedData');
-    console.log(`sort:`, sort);
     if (!sort || !sort.active || sort.direction === '') {
       return data;
     }
 
     this.tableData = data.sort((a: any, b: any) => {
-      console.log(`inside sorter`);
       const isAsc = sort?.direction === 'asc';
-      switch (sort?.active) {
-        case 'Camper Make ':
-          console.log('inside camper make');
-          console.log(`result:`, compare(a['Camper Make '], b['Camper Make '], isAsc))
-          return compare(a['Camper Make '], b['Camper Make '], isAsc);
-        case 'Camper Brand':
-          return compare(a['Camper Brand'], b['Camper Brand'], isAsc);
-        case 'Sleep Number':
-          return compare(+a['Sleep Number'], +b['Sleep Number'], isAsc);
-        case 'Price':
-          return compare(+a['Price'], +b['Price'], isAsc);
 
-        default: return 0;
+      if (a[sort?.active]) {
+        switch (typeof a[sort?.active]) {
+          case 'string':
+            return compare(a[sort?.active], b[sort?.active], isAsc);
+          case 'number':
+            return compare(+a[sort?.active], +b[sort?.active], isAsc);
+          default: return 0;
+        }
+      } else {
+        return 0;
       }
+
+      // switch (sort?.active) {
+      //   case 'Camper Make ':
+      //     return compare(a['Camper Make '], b['Camper Make '], isAsc);
+      //   case 'Camper Brand':
+      //     return compare(a['Camper Brand'], b['Camper Brand'], isAsc);
+      //   case 'Sleep Number':
+      //     return compare(+a['Sleep Number'], +b['Sleep Number'], isAsc);
+      //   case 'Price':
+      //     return compare(+a['Price'], +b['Price'], isAsc);
+
+      //   default: return 0;
+      // }
     });
   }
 }

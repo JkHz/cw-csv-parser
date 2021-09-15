@@ -18,9 +18,6 @@ export class DataTableDataSource extends DataSource<any> {
    */
   connect(): Observable<any[]> {
     if (this.sort) {
-      console.log('there is a sort!');
-      // Combine everything that affects the rendered data into one update
-      // stream for the data-table to consume.
       return merge(observableOf(this.data), this.sort.sortChange)
         .pipe(map(() => {
           return this.getSortedData([...this.data ]);
