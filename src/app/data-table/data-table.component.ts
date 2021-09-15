@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 
@@ -23,7 +22,6 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
-    // this.dataSource = this.tableData;
   }
 
   ngOnChanges(changes: any): void {
@@ -35,8 +33,7 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
 
   applyFilter() {
     this.dataSource = new MatTableDataSource(this.tableData);
-    this.dataSource.filter = this.searchKey.trim().toLowerCase();
-
+    this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase();
   }
 
   onSearchClear() {
@@ -69,4 +66,5 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
 
 function compare(a: string | number, b: string | number, isAsc: boolean): number {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
+};
+

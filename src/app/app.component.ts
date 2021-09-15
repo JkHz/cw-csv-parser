@@ -15,12 +15,8 @@ export class AppComponent {
   csvInputChange(fileInputEvent: any) {
     this.papa.parse(fileInputEvent.target.files[0], {
       complete: ({ data }: any, file: any) => {
-        console.log('Parsed: ', data);
         this.headers = Object.keys(data[0]);
         this.tableData = data;
-        console.log(`Headers: ${this.headers}`);
-        console.log(`tableData: `);
-        console.dir(this.tableData);
       },
       download: true,
       skipEmptyLines: true,
