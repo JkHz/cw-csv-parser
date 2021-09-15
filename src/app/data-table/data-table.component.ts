@@ -16,10 +16,9 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
   @Input() headers: any;
   @Input() tableData: any;
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  // displayedColumns = this.headers;
   displayedColumns = [];
   dataSource: any = [];
+  searchKey: string = '';
 
   constructor() { }
 
@@ -35,12 +34,13 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  applyFilter(filterValue: string) {
-    console.log('filterValue', filterValue);
-    console.log('filteredData', this.dataSource.filteredData);
-    this.dataSource = new MatTableDataSource(this.dataSource.filteredData);
-    console.log('dataSource', this.dataSource.data);
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter() {
+    this.dataSource.filter = this.searchKey.trim().toLowerCase();
+  }
+
+  onSearchClear() {
+    this.searchKey = '';
+    this.applyFilter();
   }
 
   getSortedData(sort: Sort) {
@@ -50,7 +50,7 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
       return data;
     }
 
-    this.tableData = data.sort((a: any, b: any) => {
+    this.dataSource = data.sort((a: any, b: any) => {
       const isAsc = sort?.direction === 'asc';
 
       if (a[sort?.active]) {
