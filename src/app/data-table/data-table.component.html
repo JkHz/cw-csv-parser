@@ -1,5 +1,5 @@
 <div class="mat-elevation-z8 data-table">
-  <mat-form-field floatLabel="never">
+  <mat-form-field floatLabel="never" class="search-input">
     <input matInput [(ngModel)]="searchKey" placeholder="Search" autoComplete="off" (keyup)="applyFilter()">
     <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
       <mat-icon>close</mat-icon>

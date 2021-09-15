@@ -6,3 +6,11 @@
   min-width: 80vw;
   margin: 20px auto;
 }
+
+.mat-form-field {
+  width: 20%;
+}
+
+.search-input {
+  margin-left: 1.5rem;
+}

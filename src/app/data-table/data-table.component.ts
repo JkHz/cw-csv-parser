@@ -9,7 +9,6 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent implements AfterViewInit, OnChanges {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<any>;
 
@@ -17,13 +16,13 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
   @Input() tableData: any;
 
   displayedColumns = [];
-  dataSource: any = [];
+  dataSource: any = new MatTableDataSource([]);
   searchKey: string = '';
 
   constructor() { }
 
   ngAfterViewInit(): void {
-    // this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
     // this.dataSource = this.tableData;
   }
 
@@ -35,7 +34,9 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
   }
 
   applyFilter() {
+    this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.filter = this.searchKey.trim().toLowerCase();
+
   }
 
   onSearchClear() {
@@ -44,15 +45,12 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
   }
 
   getSortedData(sort: Sort) {
-    console.log('direction', sort.direction);
-    const data = this.tableData.slice();
-    if (!sort || !sort.active || sort.direction === '') {
+    const data = this.dataSource.filteredData.slice();
+    if (!sort || !sort.active) {
       return data;
     }
-
     this.dataSource = data.sort((a: any, b: any) => {
-      const isAsc = sort?.direction === 'asc';
-
+      const isAsc = sort?.direction === 'asc' || sort?.direction === '' ;
       if (a[sort?.active]) {
         switch (typeof a[sort?.active]) {
           case 'string':
@@ -64,20 +62,8 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
       } else {
         return 0;
       }
-
-      // switch (sort?.active) {
-      //   case 'Camper Make ':
-      //     return compare(a['Camper Make '], b['Camper Make '], isAsc);
-      //   case 'Camper Brand':
-      //     return compare(a['Camper Brand'], b['Camper Brand'], isAsc);
-      //   case 'Sleep Number':
-      //     return compare(+a['Sleep Number'], +b['Sleep Number'], isAsc);
-      //   case 'Price':
-      //     return compare(+a['Price'], +b['Price'], isAsc);
-
-      //   default: return 0;
-      // }
     });
+    this.dataSource = new MatTableDataSource(this.dataSource);
   }
 }
 
