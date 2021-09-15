@@ -11,12 +11,14 @@ export class AppComponent {
 
   headers: string[] = [];
   tableData: Array<{}> = [];
+  isLoaded: boolean = false;
 
   csvInputChange(fileInputEvent: any) {
     this.papa.parse(fileInputEvent.target.files[0], {
       complete: ({ data }: any, file: any) => {
         this.headers = Object.keys(data[0]);
         this.tableData = data;
+        this.isLoaded = true;
       },
       download: true,
       skipEmptyLines: true,

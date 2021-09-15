@@ -3,5 +3,7 @@
 html, body { height: 100%; }
 body {
   margin: 1rem;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background-color: rgb(246, 239, 225);
+  color:rgb(56, 64, 77);
 }

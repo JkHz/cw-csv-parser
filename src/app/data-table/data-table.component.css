@@ -1,5 +1,10 @@
+.mat-elevation-z8 {
+  background-color: white;
+}
+
 .full-width-table {
   min-width: 100%;
+  z-index: 1;
 }
 
 .data-table {
@@ -8,7 +13,7 @@
 }
 
 .mat-form-field {
-  width: 20%;
+  min-width: 20vw;
 }
 
 .search-input {

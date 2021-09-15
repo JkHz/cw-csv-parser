@@ -47,12 +47,15 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
       return data;
     }
     this.dataSource = data.sort((a: any, b: any) => {
-      const isAsc = sort?.direction === 'asc' || sort?.direction === '';
+      const isAsc = sort?.direction === 'asc';
       if (a[sort?.active]) {
         switch (typeof a[sort?.active]) {
           case 'string':
             return compare(a[sort?.active], b[sort?.active], isAsc);
           case 'number':
+            if (typeof a[sort?.active] !== 'number' || typeof b[sort?.active] !== 'number') {
+              return -1;
+            }
             return compare(+a[sort?.active], +b[sort?.active], isAsc);
           default: return 0;
         }

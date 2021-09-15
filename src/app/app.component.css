@@ -1,5 +1,16 @@
 .mat-flat-button {
   margin: 0 0 2rem 0;
+  height: 3rem;
+  min-width: 6rem;
+  font-size: 1.5rem;
+  background-color: rgb(240, 168, 40);
+  color: rgb(255, 255, 255)
+}
+
+.mat-icon{
+  height:48px !important;
+  width:48px !important;
+  font-size:48px !important;
 }
 
 .app-container {
@@ -8,4 +19,21 @@
   align-items: center;
   flex-direction: column;
   margin: 3rem 0 0 0;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10rem;
+}
+
+.loading-text {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.search-container {
+  background-color: white;
 }
