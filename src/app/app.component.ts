@@ -1,4 +1,4 @@
-import { Component, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Papa } from 'ngx-papaparse';
 
 @Component({
@@ -9,13 +9,14 @@ import { Papa } from 'ngx-papaparse';
 export class AppComponent {
   constructor(private papa: Papa) { }
 
+  title: string = 'csv-parser-cw';
   headers: string[] = [];
   tableData: Array<{}> = [];
   isLoaded: boolean = false;
 
   csvInputChange(fileInputEvent: any) {
     this.papa.parse(fileInputEvent.target.files[0], {
-      complete: ({ data }: any, file: any) => {
+      complete: ({ data }: any) => {
         this.headers = Object.keys(data[0]);
         this.tableData = data;
         this.isLoaded = true;

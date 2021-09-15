@@ -20,20 +20,3 @@
   flex-direction: column;
   margin: 3rem 0 0 0;
 }
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 10rem;
-}
-
-.loading-text {
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-.search-container {
-  background-color: white;
-}

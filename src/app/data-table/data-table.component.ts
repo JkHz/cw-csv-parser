@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -10,6 +11,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 export class DataTableComponent implements AfterViewInit, OnChanges {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @Input() headers: any;
   @Input() tableData: any;
@@ -22,12 +24,15 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnChanges(changes: any): void {
     if (changes.headers || changes.tableData) {
       this.displayedColumns = this.headers;
       this.dataSource = new MatTableDataSource(this.tableData);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     }
   }
 
@@ -39,6 +44,7 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
   onSearchClear() {
     this.searchKey = '';
     this.applyFilter();
+    this.dataSource.paginator = this.paginator;
   }
 
   getSortedData(sort: Sort) {
@@ -56,6 +62,9 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
             if (typeof a[sort?.active] !== 'number' || typeof b[sort?.active] !== 'number') {
               return -1;
             }
+            if (!a[sort?.active] || !b[sort?.active]) {
+              return -1;
+            }
             return compare(+a[sort?.active], +b[sort?.active], isAsc);
           default: return 0;
         }
@@ -64,6 +73,7 @@ export class DataTableComponent implements AfterViewInit, OnChanges {
       }
     });
     this.dataSource = new MatTableDataSource(this.dataSource);
+    this.dataSource.paginator = this.paginator;
   }
 };
 
